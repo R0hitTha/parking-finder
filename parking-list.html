@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Parking — ParkFinder</title>
+  <meta name="description" content="Browse and filter nearby parking spots by price, distance, and type. Real-time availability." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2300c3ff'/><text y='.9em' font-size='70' font-weight='900' font-family='Inter,sans-serif' fill='white' x='18'>P</text></svg>" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/list.css" />
+</head>
+<body>
+
+<nav class="navbar" role="navigation">
+  <a href="index.html" class="navbar-brand">
+    <div class="brand-icon">P</div>
+    <span class="brand-text">ParkFinder</span>
+  </a>
+  <ul class="navbar-nav">
+    <li><a href="index.html">Map</a></li>
+    <li><a href="parking-list.html" class="active">Parking</a></li>
+    <li><a href="favourites.html">Favourites</a></li>
+  </ul>
+  <div class="navbar-actions">
+    <button class="btn-icon theme-btn" id="theme-toggle" title="Toggle theme">
+      <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div id="nav-auth-actions"></div>
+    <div id="nav-avatar-wrap" style="display:none;position:relative;">
+      <div class="nav-avatar">U</div>
+      <div class="nav-dropdown" id="nav-dropdown"></div>
+    </div>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Map</a>
+  <a href="parking-list.html">Parking</a>
+  <a href="favourites.html">Favourites</a>
+  <a href="login.html">Login</a>
+</div>
+
+<div class="list-page">
+
+  <!-- Hero -->
+  <div class="list-hero">
+    <div class="list-hero-inner">
+      <h1>Find Your Perfect Spot</h1>
+      <p>Browse <span id="hero-count">62</span> parking locations across India &mdash; filter by price, distance &amp; type.</p>
+      <div class="list-hero-search">
+        <input type="text" id="list-search" placeholder="Search by name or area&hellip;" />
+        <button class="btn btn-primary" id="list-search-btn">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="list-layout">
+
+    <!-- Sidebar Filters -->
+    <aside class="filter-sidebar" id="filter-sidebar">
+      <div class="filter-title">
+        Filters
+        <span class="filter-clear" id="filter-clear">Clear all</span>
+      </div>
+
+      <!-- Price Range -->
+      <div class="filter-section">
+        <div class="filter-label">Price per Hour</div>
+        <div class="range-row">
+          <span>&#8377;0</span>
+          <span class="range-val" id="price-val">Any</span>
+        </div>
+        <input type="range" id="price-range" min="0" max="150" value="150" step="5" />
+      </div>
+
+      <!-- Distance -->
+      <div class="filter-section">
+        <div class="filter-label">Max Distance</div>
+        <div class="range-row">
+          <span>0 km</span>
+          <span class="range-val" id="dist-val">Any</span>
+        </div>
+        <input type="range" id="dist-range" min="1" max="50" value="50" step="1" />
+      </div>
+
+      <!-- Type -->
+      <div class="filter-section">
+        <div class="filter-label">Parking Type</div>
+        <div class="filter-chips">
+          <div class="filter-chip active" data-type="all">All</div>
+          <div class="filter-chip" data-type="covered">Covered</div>
+          <div class="filter-chip" data-type="open">Open Air</div>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="filter-section">
+        <div class="filter-label">Availability</div>
+        <div class="filter-chips">
+          <div class="filter-chip active" data-avail="all">All</div>
+          <div class="filter-chip" data-avail="available">Available</div>
+          <div class="filter-chip" data-avail="limited">Limited</div>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="filter-section">
+        <div class="filter-label">Minimum Rating</div>
+        <div class="filter-chips">
+          <div class="filter-chip active" data-rating="0">All</div>
+          <div class="filter-chip" data-rating="3">3<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#f59e0b;vertical-align:-1px;margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>+</div>
+          <div class="filter-chip" data-rating="4">4<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#f59e0b;vertical-align:-1px;margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>+</div>
+          <div class="filter-chip" data-rating="4.5">4.5<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:#f59e0b;vertical-align:-1px;margin-left:2px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>+</div>
+        </div>
+      </div>
+
+      <!-- Amenities -->
+      <div class="filter-section">
+        <div class="filter-label">Amenities</div>
+        <div class="filter-chips">
+          <div class="filter-chip" data-amenity="EV Charging">EV Charging</div>
+          <div class="filter-chip" data-amenity="CCTV">CCTV</div>
+          <div class="filter-chip" data-amenity="Valet">Valet</div>
+          <div class="filter-chip" data-amenity="24/7">24/7</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results -->
+    <div class="results-area">
+      <div class="results-toolbar">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button class="filter-toggle-btn" id="filter-toggle">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="margin-right:6px"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            Filters
+          </button>
+          <span class="results-count">Showing <strong id="results-count">62</strong> spots</span>
+          <span style="font-size:0.78rem;color:var(--text-3)"><span class="live-dot"></span> Live availability</span>
+        </div>
+        <div class="toolbar-right">
+          <select class="sort-select" id="sort-select">
+            <option value="distance">Nearest First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+            <option value="availability">Most Available</option>
+          </select>
+          <div class="view-toggles">
+            <button class="view-toggle-btn active" id="grid-btn" title="Grid view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="view-toggle-btn" id="list-btn" title="List view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="cards-container" class="cards-grid"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>&copy; 2026 ParkFinder &middot; <a href="index.html">Map View</a> &middot; <a href="admin.html">Admin</a></p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/list.js"></script>
+</body>
+</html>

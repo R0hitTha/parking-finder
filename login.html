@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — ParkFinder</title>
+  <meta name="description" content="Login or create an account to save favourite spots, leave reviews and book parking." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2300c3ff'/><text y='.9em' font-size='70' font-weight='900' font-family='Inter,sans-serif' fill='white' x='18'>P</text></svg>" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="auth-page">
+
+<nav class="navbar" role="navigation">
+  <a href="index.html" class="navbar-brand">
+    <div class="brand-icon">P</div>
+    <span class="brand-text">ParkFinder</span>
+  </a>
+  <div class="navbar-actions" style="margin-left:auto">
+    <button class="btn-icon theme-btn" id="theme-toggle" title="Toggle theme">
+      <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <span class="logo-icon">P</span>
+      <h1>Welcome to <span>ParkFinder</span></h1>
+      <p>Find, book and navigate to parking effortlessly.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <form class="auth-form active" id="form-login" novalidate>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <input type="email" id="login-email" class="form-input" placeholder="Email address" autocomplete="email" />
+        </div>
+        <span class="form-error" id="login-email-err"></span>
+      </div>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="login-password" class="form-input" placeholder="Password" autocomplete="current-password" />
+          <button type="button" class="input-toggle" id="login-pw-toggle" title="Show/hide password">
+            <svg class="eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <span class="form-error" id="login-pw-err"></span>
+      </div>
+      <div class="auth-row">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="remember-me" /> Remember me
+        </label>
+        <a href="#" class="auth-link">Forgot password?</a>
+      </div>
+      <button type="submit" class="auth-submit" id="login-submit">Login &rarr;</button>
+
+      <div class="auth-divider">or try demo credentials</div>
+      <div class="demo-hint">
+        <strong>User:</strong> priya@example.com / <code>test123</code><br/>
+        <strong>Admin:</strong> admin@parkfinder.com / <code>admin123</code>
+      </div>
+    </form>
+
+    <!-- Signup Form -->
+    <form class="auth-form" id="form-signup" novalidate>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="signup-name" class="form-input" placeholder="Full name" autocomplete="name" />
+        </div>
+        <span class="form-error" id="signup-name-err"></span>
+      </div>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <input type="email" id="signup-email" class="form-input" placeholder="Email address" autocomplete="email" />
+        </div>
+        <span class="form-error" id="signup-email-err"></span>
+      </div>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="signup-password" class="form-input" placeholder="Password (min 6 chars)" autocomplete="new-password" />
+          <button type="button" class="input-toggle" id="signup-pw-toggle" title="Show/hide password">
+            <svg class="eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="pw-strength" id="pw-strength">
+          <div class="pw-bars">
+            <div class="pw-bar" id="pw-bar-1"></div>
+            <div class="pw-bar" id="pw-bar-2"></div>
+            <div class="pw-bar" id="pw-bar-3"></div>
+          </div>
+          <div class="pw-label" id="pw-label">Enter a password</div>
+        </div>
+        <span class="form-error" id="signup-pw-err"></span>
+      </div>
+      <div class="form-group">
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="signup-confirm" class="form-input" placeholder="Confirm password" autocomplete="new-password" />
+        </div>
+        <span class="form-error" id="signup-confirm-err"></span>
+      </div>
+      <button type="submit" class="auth-submit" id="signup-submit">Create Account &rarr;</button>
+    </form>
+
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

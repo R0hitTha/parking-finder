@@ -1,0 +1,180 @@
+/* ─── Hero Splash Section ─────────────────────────────────────────────────── */
+.hero-splash {
+  position: relative;
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-primary);
+  padding: 60px 24px 100px;
+  text-align: center;
+}
+
+/* Animated background orbs */
+.hero-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: float 6s ease-in-out infinite;
+}
+.hero-orb-1 {
+  width: 500px; height: 500px;
+  background: rgba(0, 195, 255, 0.09);
+  top: -120px; left: -100px;
+  animation-duration: 7s;
+}
+.hero-orb-2 {
+  width: 450px; height: 450px;
+  background: rgba(139, 92, 246, 0.08);
+  bottom: -100px; right: -80px;
+  animation-duration: 9s;
+  animation-delay: -3s;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--r-full);
+  background: rgba(0, 195, 255, 0.1);
+  border: 1px solid rgba(0, 195, 255, 0.25);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  color: var(--text-1);
+}
+.hero-accent {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  color: var(--text-2);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.hero-cta .btn-lg { padding: 14px 32px; font-size: 1rem; border-radius: var(--r-full); }
+.hero-cta .btn-primary { box-shadow: 0 8px 32px rgba(0, 195, 255, 0.35); }
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 20px 32px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow);
+}
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 28px;
+}
+.hero-stat-div {
+  width: 1px;
+  height: 40px;
+  background: var(--border);
+}
+.hero-stat-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hero-stat-lbl {
+  font-size: 0.72rem;
+  color: var(--text-2);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Scroll button */
+.hero-scroll-btn {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--glass-bg);
+  border: 1px solid var(--border-hi);
+  color: var(--text-2);
+  padding: 10px 22px;
+  border-radius: var(--r-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--t);
+  animation: bounce 2s ease-in-out infinite;
+  backdrop-filter: var(--glass-blur);
+}
+.hero-scroll-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0, 195, 255, 0.08);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* Hero hidden state */
+.hero-splash.hidden {
+  display: none;
+}
+
+/* ─── Map section (pulled from below hero) ───────────────────────── */
+#map-section {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  width: 100%;
+  overflow: hidden;
+}
+#map-section.hidden { display: none; }
+
+/* ─── Responsive hero ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero-splash { padding: 40px 16px 80px; }
+  .hero-stats { padding: 16px 12px; flex-wrap: wrap; gap: 16px; }
+  .hero-stat { padding: 0 14px; }
+  .hero-stat-div { display: none; }
+  .hero-stat-num { font-size: 1.3rem; }
+  .hero-cta { gap: 10px; }
+  .hero-cta .btn-lg { padding: 12px 22px; font-size: 0.9rem; }
+}

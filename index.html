@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ParkFinder — Find Parking Near You</title>
+  <meta name="description" content="Find the nearest parking spots with real-time availability, pricing, and navigation. ParkFinder makes parking effortless." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%2300c3ff'/><text y='.9em' font-size='70' font-weight='900' font-family='Inter,sans-serif' fill='white' x='18'>P</text></svg>" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#00c3ff" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="navbar-brand">
+    <div class="brand-icon">P</div>
+    <span class="brand-text">ParkFinder</span>
+  </a>
+
+  <ul class="navbar-nav">
+    <li><a href="index.html" class="active">Map</a></li>
+    <li><a href="parking-list.html">Parking</a></li>
+    <li><a href="favourites.html">Favourites</a></li>
+  </ul>
+
+  <div class="navbar-actions">
+    <button class="btn-icon theme-btn" id="theme-toggle" title="Toggle dark/light mode">
+      <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div id="nav-auth-actions"></div>
+    <div id="nav-avatar-wrap" style="display:none; position:relative;">
+      <div class="nav-avatar">U</div>
+      <div class="nav-dropdown" id="nav-dropdown"></div>
+    </div>
+  </div>
+
+  <div class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Map</a>
+  <a href="parking-list.html">Parking</a>
+  <a href="favourites.html">Favourites</a>
+  <a href="login.html">Login</a>
+</div>
+
+<!-- Hero Splash -->
+<div class="hero-splash" id="hero-splash">
+  <div class="hero-bg-orb hero-orb-1"></div>
+  <div class="hero-bg-orb hero-orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge animate-in"><span class="live-dot" style="margin-right:8px;"></span>Live Availability</div>
+    <h1 class="hero-title animate-in-2">Find Parking,<br/><span class="hero-accent">Instantly.</span></h1>
+    <p class="hero-sub animate-in-3">Real-time availability &bull; Compare prices &bull; Navigate in one tap</p>
+    <div class="hero-cta animate-in-4">
+      <button class="btn btn-primary btn-lg" id="hero-gps-btn">Find Near Me</button>
+      <a href="parking-list.html" class="btn btn-secondary btn-lg">Browse All Spots &rarr;</a>
+    </div>
+    <div class="hero-stats animate-in-4">
+      <div class="hero-stat"><span class="hero-stat-num" id="hs-spots">62</span><span class="hero-stat-lbl">Parking Spots</span></div>
+      <div class="hero-stat-div"></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="hs-avail">58</span><span class="hero-stat-lbl">Available Now</span></div>
+      <div class="hero-stat-div"></div>
+      <div class="hero-stat"><span class="hero-stat-num" id="hs-price">&#8377;64</span><span class="hero-stat-lbl">Avg / Hour</span></div>
+    </div>
+  </div>
+  <button class="hero-scroll-btn" id="hero-explore-btn" title="Open Map">
+    Explore Map &darr;
+  </button>
+</div>
+
+<main class="map-wrapper hidden" id="map-section">
+
+  <!-- Loading Overlay -->
+  <div class="map-loading" id="map-loading">
+    <div class="loading-logo">P</div>
+    <div class="loading-text">Loading ParkFinder&hellip;</div>
+    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  </div>
+
+  <!-- Leaflet Map -->
+  <div id="main-map"></div>
+
+  <!-- Search Panel -->
+  <div class="search-panel" role="search">
+    <div class="search-bar">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </span>
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Search parking by name or location&hellip;"
+        autocomplete="off"
+        aria-label="Search parking spots"
+      />
+      <button class="search-btn" id="search-submit">Search</button>
+    </div>
+    <div class="search-suggestions" id="search-suggestions"></div>
+  </div>
+
+  <!-- Float Buttons -->
+  <div class="map-float-btns">
+    <button class="map-float-btn" id="gps-btn" title="Detect my location">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/><circle cx="12" cy="12" r="10" stroke-dasharray="2 4" stroke-width="1.5"/></svg>
+    </button>
+    <button class="map-float-btn" id="view-list-btn" title="View as list">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    </button>
+  </div>
+
+  <!-- Stats Ribbon -->
+  <div class="stats-ribbon">
+    <div class="stat-item">
+      <span class="stat-icon stat-icon-p">P</span>
+      <div>
+        <div class="stat-label">Total Spots</div>
+        <div class="stat-value" id="stat-spots">&mdash;</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon stat-icon-check">&#10003;</span>
+      <div>
+        <div class="stat-label">Available Now</div>
+        <div class="stat-value" id="stat-avail">&mdash;</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon stat-icon-rupee">&#8377;</span>
+      <div>
+        <div class="stat-label">Avg. Price/hr</div>
+        <div class="stat-value" id="stat-avg">&mdash;</div>
+      </div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-icon"><span class="live-dot"></span></span>
+      <div>
+        <div class="stat-label">Live Updates</div>
+        <div class="stat-value" id="stat-live">&mdash;</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <p>&copy; 2026 ParkFinder &middot; <a href="index.html">Map View</a> &middot; <a href="parking-list.html">Browse All</a> &middot; <a href="admin.html">Admin</a></p>
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/map.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

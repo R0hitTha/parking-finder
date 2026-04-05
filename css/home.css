@@ -1,0 +1,202 @@
+/* ParkFinder — Home Page Styles */
+
+/* ─── Map Wrapper (hidden until user clicks hero CTA) ────────────────────── */
+.map-wrapper {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  width: 100%;
+  overflow: hidden;
+}
+#map-section { display: block; }
+#map-section.hidden { display: none; }
+
+#main-map {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+/* Override Leaflet default popup style */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-hi) !important;
+  border-radius: var(--r-md) !important;
+  box-shadow: var(--shadow) !important;
+  color: var(--text-1) !important;
+  padding: 0 !important;
+  min-width: 220px;
+}
+.leaflet-popup-content { margin: 0 !important; }
+.leaflet-popup-tip { background: var(--bg-secondary) !important; }
+.leaflet-popup-close-button { color: var(--text-2) !important; top: 10px !important; right: 10px !important; font-size: 1rem !important; }
+.leaflet-control-attribution { background: var(--glass-bg) !important; color: var(--text-3) !important; }
+.leaflet-control-zoom a {
+  background: var(--bg-secondary) !important;
+  border-color: var(--border) !important;
+  color: var(--text-1) !important;
+  font-weight: 700;
+}
+.leaflet-control-zoom a:hover { background: var(--bg-hover) !important; color: var(--accent) !important; }
+
+/* ─── Floating Search Panel ──────────────────────────────────────────────── */
+.search-panel {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 500;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-xl);
+  padding: 10px 16px;
+  box-shadow: var(--shadow), var(--glow);
+  transition: all var(--t);
+}
+.search-bar:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow), 0 0 0 3px rgba(0,195,255,0.14);
+}
+.search-bar .search-icon { font-size: 1.1rem; color: var(--text-2); flex-shrink: 0; }
+.search-input {
+  flex: 1; background: none; border: none; outline: none;
+  color: var(--text-1); font-size: 0.95rem; font-weight: 500;
+}
+.search-input::placeholder { color: var(--text-3); font-weight: 400; }
+.search-btn {
+  background: var(--accent-grad);
+  color: #fff; border: none; border-radius: var(--r-full);
+  padding: 8px 18px; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: all var(--t);
+}
+.search-btn:hover { transform: scale(1.04); box-shadow: 0 4px 14px rgba(0,195,255,0.35); }
+
+/* Search Suggestions */
+.search-suggestions {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: none;
+}
+.search-suggestions.show { display: block; animation: fadeUp 0.2s var(--ease); }
+.suggestion-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; cursor: pointer;
+  transition: background var(--t);
+  border-bottom: 1px solid var(--border);
+}
+.suggestion-item:last-child { border-bottom: none; }
+.suggestion-item:hover { background: var(--bg-hover); }
+.suggestion-icon { font-size: 1.1rem; flex-shrink: 0; }
+.suggestion-name { font-size: 0.9rem; font-weight: 500; }
+.suggestion-addr { font-size: 0.78rem; color: var(--text-2); }
+
+/* ─── Map Float Buttons ──────────────────────────────────────────────────── */
+.map-float-btns {
+  position: absolute;
+  right: 20px;
+  bottom: 40px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.map-float-btn {
+  width: 48px; height: 48px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-hi);
+  border-radius: 14px;
+  color: var(--text-1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all var(--t);
+}
+.map-float-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.08); }
+
+/* ─── Map Popup Content ──────────────────────────────────────────────────── */
+.map-popup {
+  padding: 14px 16px;
+}
+.map-popup-name { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+.map-popup-row { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-2); margin-bottom: 4px; }
+.map-popup-price { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 8px 0; }
+.map-popup-footer { display: flex; gap: 8px; margin-top: 10px; }
+.map-popup-footer a { flex: 1; text-align: center; padding: 7px 10px; border-radius: var(--r-sm); font-size: 0.8rem; font-weight: 600; }
+
+/* ─── Stats Ribbon ───────────────────────────────────────────────────────── */
+.stats-ribbon {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 400;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-around; gap: 16px;
+  flex-wrap: wrap;
+}
+.stat-item { display: flex; align-items: center; gap: 10px; }
+.stat-icon { font-size: 1.4rem; }
+.stat-label { font-size: 0.72rem; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-value { font-size: 1rem; font-weight: 700; }
+
+/* ─── Map Loading Overlay ────────────────────────────────────────────────── */
+.map-loading {
+  position: absolute;
+  inset: 0; z-index: 450;
+  background: var(--bg-primary);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  transition: opacity 0.5s var(--ease);
+}
+.map-loading.hidden { opacity: 0; pointer-events: none; }
+.loading-logo { font-size: 3rem; animation: float 2s ease-in-out infinite; }
+.loading-text { font-size: 1.1rem; font-weight: 600; color: var(--text-2); }
+.loading-bar { width: 200px; height: 4px; background: var(--bg-hover); border-radius: var(--r-full); overflow: hidden; }
+.loading-bar-fill { height: 100%; background: var(--accent-grad); border-radius: var(--r-full); animation: loadingBar 1.5s var(--ease) forwards; }
+@keyframes loadingBar { from{width:0} to{width:100%} }
+
+/* ─── Custom Leaflet Marker ──────────────────────────────────────────────── */
+.custom-marker {
+  width: 36px; height: 36px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.custom-marker:hover { transform: rotate(-45deg) scale(1.15); }
+.custom-marker .marker-inner { transform: rotate(45deg); font-size: 0.8rem; font-weight: 700; color: #fff; }
+.marker-available { background: var(--success); }
+.marker-limited   { background: var(--warning); }
+.marker-full      { background: var(--danger); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .search-panel { top: 12px; left: 12px; right: 12px; }
+  .map-float-btns { right: 12px; bottom: 100px; }
+  .stats-ribbon { padding: 12px 12px; }
+  .stat-value { font-size: 0.9rem; }
+}

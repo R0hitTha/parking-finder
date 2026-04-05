@@ -1,0 +1,191 @@
+/* ParkFinder — Details Page */
+
+.details-page { padding-top: var(--nav-h); }
+
+/* ─── Hero ───────────────────────────────────────────────────────────────── */
+.details-hero {
+  position: relative;
+  height: 320px;
+  background: var(--bg-secondary);
+  overflow: hidden;
+}
+.details-hero-map { width: 100%; height: 100%; }
+.details-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--bg-primary) 100%);
+  pointer-events: none;
+}
+.details-back {
+  position: absolute; top: 20px; left: 20px; z-index: 10;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-hi); border-radius: var(--r-full);
+  padding: 8px 16px; color: var(--text-1); font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all var(--t); display: flex; align-items: center; gap: 6px;
+}
+.details-back:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ─── Content ─────────────────────────────────────────────────────────────── */
+.details-content {
+  max-width: 960px; margin: 0 auto;
+  padding: 0 24px 60px;
+  margin-top: -60px; position: relative; z-index: 1;
+}
+
+/* ─── Header Card ─────────────────────────────────────────────────────────── */
+.details-header-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-xl);
+  padding: 28px 32px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.details-header-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.details-name { font-size: 1.7rem; font-weight: 800; line-height: 1.2; }
+.details-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+.fav-btn-lg {
+  width: 44px; height: 44px; border-radius: var(--r-sm);
+  background: var(--bg-hover); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; cursor: pointer; transition: all var(--t);
+}
+.fav-btn-lg:hover { transform: scale(1.1); }
+.fav-btn-lg.active { background: rgba(239,68,68,0.1); border-color: var(--danger); }
+
+.details-meta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.details-badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.rating-display {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 1.1rem; font-weight: 700;
+}
+.rating-display .stars { font-size: 1rem; }
+
+/* ─── Info Grid ──────────────────────────────────────────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  transition: all var(--t);
+}
+.info-card:hover { border-color: var(--border-hi); box-shadow: var(--shadow); }
+.info-card-icon { font-size: 1.6rem; margin-bottom: 8px; }
+.info-card-label { font-size: 0.75rem; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.info-card-value { font-size: 1.25rem; font-weight: 800; }
+.info-card-value.accent { color: var(--accent); }
+.info-card-value.success { color: var(--success); }
+.info-card-value.warning { color: var(--warning); }
+.info-card-value.danger  { color: var(--danger); }
+
+/* ─── Availability Section ───────────────────────────────────────────────── */
+.avail-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.avail-section-title { font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+.avail-big {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px;
+}
+.avail-big-num { font-size: 2.5rem; font-weight: 900; line-height: 1; }
+.avail-big-label { font-size: 1rem; color: var(--text-2); }
+.avail-bar-big { height: 12px; background: var(--bg-hover); border-radius: var(--r-full); overflow: hidden; }
+.avail-fill-big { height: 100%; border-radius: var(--r-full); transition: width 0.8s var(--ease); }
+
+/* ─── Amenities ──────────────────────────────────────────────────────────── */
+.amenities-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.section-head { font-size: 1rem; font-weight: 700; margin-bottom: 14px; }
+.amenity-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.amenity-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: var(--r-full);
+  background: rgba(0,195,255,0.08); border: 1px solid rgba(0,195,255,0.2);
+  color: var(--accent); font-size: 0.85rem; font-weight: 500;
+}
+
+/* ─── Action Bar ─────────────────────────────────────────────────────────── */
+.action-bar {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.action-bar .btn { flex: 1; min-width: 140px; justify-content: center; }
+
+/* ─── Reviews ────────────────────────────────────────────────────────────── */
+.reviews-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.review-item {
+  display: flex; gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.review-item:last-child { border-bottom: none; }
+.reviewer-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--accent-grad); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.reviewer-name { font-size: 0.9rem; font-weight: 600; }
+.reviewer-date { font-size: 0.75rem; color: var(--text-2); }
+.review-text { font-size: 0.88rem; color: var(--text-2); margin-top: 4px; }
+
+/* Add Review Form */
+.add-review-form {
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 20px;
+  margin-top: 16px;
+}
+.star-picker { display: flex; gap: 4px; margin-bottom: 12px; }
+.star-picker span {
+  font-size: 1.5rem; cursor: pointer; color: var(--text-3);
+  transition: color var(--t), transform var(--t);
+}
+.star-picker span:hover,
+.star-picker span.active { color: #f59e0b; transform: scale(1.15); }
+
+/* ─── Book Modal ─────────────────────────────────────────────────────────── */
+.book-summary { background: var(--bg-hover); border-radius: var(--r-md); padding: 16px; margin: 16px 0; }
+.book-summary-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; }
+.book-summary-row.total { border-top: 1px solid var(--border); padding-top: 10px; font-weight: 700; font-size: 1rem; }
+.payment-methods { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+.payment-pill {
+  padding: 8px 16px; border-radius: var(--r-full);
+  border: 1.5px solid var(--border); cursor: pointer;
+  font-size: 0.85rem; font-weight: 500; transition: all var(--t);
+}
+.payment-pill.active { border-color: var(--accent); background: rgba(0,195,255,0.1); color: var(--accent); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .details-hero { height: 220px; }
+  .details-content { padding: 0 14px 40px; margin-top: -40px; }
+  .details-header-card { padding: 20px; }
+  .details-name { font-size: 1.3rem; }
+  .info-grid { grid-template-columns: repeat(2, 1fr); }
+  .action-bar .btn { min-width: 120px; }
+}

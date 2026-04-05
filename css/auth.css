@@ -1,0 +1,166 @@
+/* ParkFinder — Auth Page */
+
+body.auth-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* ─── Auth Wrapper ───────────────────────────────────────────────────────── */
+.auth-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 20px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background orbs */
+.auth-wrapper::before, .auth-wrapper::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.auth-wrapper::before {
+  width: 400px; height: 400px;
+  background: rgba(0,195,255,0.08);
+  top: -80px; left: -100px;
+}
+.auth-wrapper::after {
+  width: 350px; height: 350px;
+  background: rgba(139,92,246,0.08);
+  bottom: -60px; right: -80px;
+}
+
+/* ─── Auth Card ──────────────────────────────────────────────────────────── */
+.auth-card {
+  width: 100%; max-width: 440px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-xl);
+  padding: 36px 32px;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow), var(--glow);
+  position: relative; z-index: 1;
+  animation: fadeIn 0.5s var(--ease);
+}
+
+.auth-logo {
+  text-align: center; margin-bottom: 24px;
+}
+.auth-logo .logo-icon {
+  width: 64px; height: 64px; border-radius: 18px;
+  background: var(--accent-grad);
+  color: #fff; font-size: 1.8rem; font-weight: 900;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(0,195,255,0.3);
+}
+.auth-logo h1 { font-size: 1.5rem; font-weight: 800; }
+.auth-logo h1 span { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.auth-logo p { font-size: 0.85rem; color: var(--text-2); margin-top: 4px; }
+
+/* ─── Tabs ────────────────────────────────────────────────────────────────── */
+.auth-tabs {
+  display: flex; gap: 4px;
+  background: var(--bg-hover);
+  border-radius: var(--r-sm);
+  padding: 4px;
+  margin-bottom: 28px;
+}
+.auth-tab {
+  flex: 1; padding: 9px; border-radius: 6px;
+  font-size: 0.875rem; font-weight: 600; text-align: center;
+  cursor: pointer; color: var(--text-2);
+  transition: all var(--t); border: none; background: none;
+}
+.auth-tab.active {
+  background: var(--bg-secondary);
+  color: var(--text-1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* ─── Forms ──────────────────────────────────────────────────────────────── */
+.auth-form { display: none; flex-direction: column; gap: 16px; }
+.auth-form.active { display: flex; animation: fadeIn 0.3s var(--ease); }
+
+.input-wrapper {
+  position: relative;
+}
+.input-icon {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--text-3); pointer-events: none;
+  display: flex; align-items: center;
+}
+.input-wrapper .form-input { padding-left: 38px; }
+.input-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 0.9rem; color: var(--text-3); cursor: pointer;
+  background: none; border: none; padding: 4px;
+  transition: color var(--t);
+}
+.input-toggle:hover { color: var(--text-1); }
+
+/* Password Strength */
+.pw-strength { margin-top: -8px; }
+.pw-bars { display: flex; gap: 4px; margin-bottom: 4px; }
+.pw-bar { flex: 1; height: 3px; border-radius: var(--r-full); background: var(--bg-hover); transition: background var(--t); }
+.pw-bar.weak   { background: var(--danger); }
+.pw-bar.fair   { background: var(--warning); }
+.pw-bar.strong { background: var(--success); }
+.pw-label { font-size: 0.75rem; color: var(--text-2); }
+
+/* Remember row */
+.auth-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.83rem;
+}
+.checkbox-wrap { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-2); }
+.checkbox-wrap input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+.auth-link { color: var(--accent); font-size: 0.83rem; }
+.auth-link:hover { text-decoration: underline; }
+
+/* Submit btn */
+.auth-submit {
+  width: 100%;
+  padding: 13px;
+  border-radius: var(--r-sm);
+  font-size: 0.95rem; font-weight: 700;
+  background: var(--accent-grad);
+  color: #fff;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,195,255,0.3);
+  transition: all var(--t);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.auth-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,195,255,0.4); }
+.auth-submit:disabled { opacity: 0.6; pointer-events: none; }
+
+/* Divider */
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--text-3); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* Demo Hint */
+.demo-hint {
+  background: rgba(0,195,255,0.06);
+  border: 1px solid rgba(0,195,255,0.15);
+  border-radius: var(--r-md);
+  padding: 12px 14px; font-size: 0.8rem; color: var(--text-2);
+}
+.demo-hint strong { color: var(--text-1); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .auth-card { padding: 28px 20px; }
+}

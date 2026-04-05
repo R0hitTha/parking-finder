@@ -1,0 +1,19 @@
+{
+  "name": "ParkFinder",
+  "short_name": "ParkFinder",
+  "description": "Find the nearest parking spots with real-time pricing and availability.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#07091a",
+  "theme_color": "#00c3ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%2307091a'/><text y='130' x='20' font-size='130'>🅿️</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["navigation", "utilities"],
+  "screenshots": []
+}

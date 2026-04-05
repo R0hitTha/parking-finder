@@ -1,0 +1,225 @@
+/* ParkFinder — Parking List Page */
+
+.list-page { padding-top: var(--nav-h); min-height: 100vh; }
+
+/* ─── Page Hero ──────────────────────────────────────────────────────────── */
+.list-hero {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px 24px;
+}
+.list-hero-inner { max-width: 1280px; margin: 0 auto; }
+.list-hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; }
+.list-hero p { color: var(--text-2); font-size: 0.95rem; }
+.list-hero-search {
+  display: flex; gap: 10px; margin-top: 18px;
+  max-width: 560px;
+}
+.list-hero-search input {
+  flex: 1; padding: 11px 16px;
+  background: var(--bg-hover); border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); color: var(--text-1); font-size: 0.9rem;
+  transition: border-color var(--t);
+}
+.list-hero-search input:focus { border-color: var(--accent); }
+
+/* ─── Main Layout ────────────────────────────────────────────────────────── */
+.list-layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  padding: 24px;
+  align-items: start;
+}
+
+/* ─── Filter Sidebar ─────────────────────────────────────────────────────── */
+.filter-sidebar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  position: sticky;
+  top: calc(var(--nav-h) + 16px);
+  backdrop-filter: var(--glass-blur);
+}
+.filter-title {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.filter-clear { font-size: 0.78rem; color: var(--accent); cursor: pointer; font-weight: 500; }
+.filter-clear:hover { color: var(--accent-2); }
+
+.filter-section { margin-bottom: 22px; }
+.filter-label { font-size: 0.78rem; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+
+/* Range Slider */
+.range-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.range-val { font-size: 0.82rem; font-weight: 600; color: var(--accent); }
+input[type="range"] {
+  width: 100%; height: 4px;
+  -webkit-appearance: none; appearance: none;
+  background: linear-gradient(to right, var(--accent) var(--val, 50%), var(--bg-hover) var(--val, 50%));
+  border-radius: var(--r-full); outline: none; cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 2.5px solid var(--bg-secondary);
+  box-shadow: 0 0 8px rgba(0,195,255,0.4); cursor: pointer;
+  transition: transform var(--t);
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* Toggle Chips */
+.filter-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-chip {
+  padding: 6px 14px; border-radius: var(--r-full);
+  font-size: 0.8rem; font-weight: 500;
+  border: 1.5px solid var(--border); color: var(--text-2);
+  background: var(--bg-hover); cursor: pointer;
+  transition: all var(--t);
+}
+.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+.filter-chip.active {
+  background: rgba(0,195,255,0.12);
+  border-color: var(--accent); color: var(--accent);
+  font-weight: 600;
+}
+
+/* ─── Results Area ───────────────────────────────────────────────────────── */
+.results-area { min-width: 0; }
+.results-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
+}
+.results-count { font-size: 0.9rem; color: var(--text-2); }
+.results-count strong { color: var(--text-1); }
+.toolbar-right { display: flex; align-items: center; gap: 12px; }
+.sort-select {
+  padding: 8px 12px; background: var(--bg-hover); border: 1px solid var(--border);
+  border-radius: var(--r-sm); color: var(--text-1); font-size: 0.85rem; cursor: pointer;
+  transition: border-color var(--t);
+}
+.sort-select:focus { border-color: var(--accent); }
+.view-toggles { display: flex; gap: 4px; }
+.view-toggle-btn {
+  width: 36px; height: 36px; border-radius: var(--r-sm);
+  background: var(--bg-hover); border: 1px solid var(--border);
+  color: var(--text-2); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem; transition: all var(--t);
+}
+.view-toggle-btn.active { background: rgba(0,195,255,0.12); border-color: var(--accent); color: var(--accent); }
+
+/* ─── Cards Grid ─────────────────────────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+  gap: 18px;
+}
+.cards-list { display: flex; flex-direction: column; gap: 14px; }
+
+/* ─── Parking Card ───────────────────────────────────────────────────────── */
+.park-card {
+  display: flex; flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: all var(--t);
+}
+.park-card:hover {
+  border-color: var(--border-hi);
+  box-shadow: var(--shadow), var(--glow);
+  transform: translateY(-4px);
+}
+.park-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 0;
+}
+.fav-btn {
+  background: none; border: none;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform var(--t);
+  color: var(--text-3);
+  border-radius: var(--r-sm);
+}
+.fav-btn:hover { transform: scale(1.2); color: #ef4444; }
+.fav-btn.active { color: #ef4444; }
+.park-card-body { padding: 12px 16px 8px; flex: 1; }
+.park-name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; line-height: 1.3; }
+.park-addr { margin-bottom: 10px; }
+.park-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.meta-item { font-size: 0.82rem; color: var(--text-2); }
+.park-avail { margin-bottom: 12px; }
+.avail-header { display: flex; align-items: center; justify-content: space-between; }
+.avail-total { font-size: 0.75rem; }
+.park-price {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--border);
+}
+.price-main { font-size: 1.25rem; font-weight: 800; color: var(--accent); }
+.price-unit { font-size: 0.8rem; font-weight: 400; color: var(--text-2); }
+.price-day { font-size: 0.8rem; }
+.park-card-footer {
+  display: flex; gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.1);
+}
+.park-card-footer .btn { flex: 1; justify-content: center; }
+
+/* List view overrides */
+.cards-list .park-card {
+  flex-direction: row; align-items: stretch;
+}
+.cards-list .park-card-header {
+  flex-direction: column; align-items: flex-start;
+  padding: 16px 0 16px 16px; min-width: 80px; gap: 8px; justify-content: flex-start;
+}
+.cards-list .park-card-body { padding: 16px; }
+.cards-list .park-card-footer {
+  flex-direction: column; padding: 12px; min-width: 130px;
+  border-top: none; border-left: 1px solid var(--border);
+}
+.cards-list .park-card-footer .btn { padding: 8px 12px; font-size: 0.8rem; }
+
+/* ─── Empty State ────────────────────────────────────────────────────────── */
+.empty-state {
+  text-align: center; padding: 60px 20px;
+  color: var(--text-2);
+}
+.empty-state .empty-icon { font-size: 3.5rem; margin-bottom: 16px; }
+.empty-state .empty-icon-text {
+  width: 80px; height: 80px; margin: 0 auto 20px;
+}
+.empty-state h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--text-1); }
+
+/* ─── Filter Toggle (mobile) ─────────────────────────────────────────────── */
+.filter-toggle-btn {
+  display: none;
+  align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: var(--r-sm);
+  background: var(--bg-hover); border: 1px solid var(--border);
+  color: var(--text-1); font-size: 0.875rem; font-weight: 600;
+  cursor: pointer;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .list-layout { grid-template-columns: 1fr; }
+  .filter-sidebar { position: static; display: none; }
+  .filter-sidebar.show { display: block; }
+  .filter-toggle-btn { display: flex; }
+}
+@media (max-width: 600px) {
+  .list-hero { padding: 20px 16px 16px; }
+  .list-layout { padding: 16px; gap: 16px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .cards-list .park-card { flex-direction: column; }
+  .cards-list .park-card-footer { border-left: none; border-top: 1px solid var(--border); flex-direction: row; }
+}
